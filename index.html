@@ -1,51 +1,104 @@
-<script>
-  let isRunning = false;
-  let isBreak = false;
-  let timer;
-  let timeLeft = 1500; // 25 minutes
-
-  const timerDisplay = document.getElementById('timer');
-  const startButton = document.getElementById('start');
-
-  function updateDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
-
-  function startTimer() {
-    if (isRunning) return;
-    isRunning = true;
-    startButton.textContent = 'Pause';
-    timer = setInterval(() => {
-      if (timeLeft > 0) {
-        timeLeft--;
-        updateDisplay();
-      } else {
-        clearInterval(timer);
-        isRunning = false;
-        isBreak = !isBreak;
-        timeLeft = isBreak ? 300 : 1500;
-        startButton.textContent = 'Start';
-        alert(isBreak ? 'Time for a break!' : 'Back to focus!');
-        updateDisplay();
-      }
-    }, 1000);
-  }
-
-  function pauseTimer() {
-    clearInterval(timer);
-    isRunning = false;
-    startButton.textContent = 'Start';
-  }
-
-  startButton.addEventListener('click', () => {
-    if (isRunning) {
-      pauseTimer();
-    } else {
-      startTimer();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🍵 Matcha Pomodoro</title>
+  <style>
+    body {
+      background-color: #f3fdf6;
+      color: #2e7d32;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
-  });
 
-  updateDisplay();
-</script>
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #timer {
+      font-size: 5em;
+      margin-bottom: 20px;
+      transition: color 0.3s ease;
+    }
+
+    button {
+      background-color: #a5d6a7;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #81c784;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>🍵 Matcha Pomodoro</h1>
+  <div id="timer">25:00</div>
+  <button id="start">Start</button>
+
+  <script>
+    let isRunning = false;
+    let isBreak = false;
+    let timer;
+    let timeLeft = 25 * 60; // 25 minutes
+
+    const timerDisplay = document.getElementById('timer');
+    const startButton = document.getElementById('start');
+
+    function updateDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+      isRunning = true;
+      startButton.textContent = 'Pause';
+      timer = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateDisplay();
+        } else {
+          clearInterval(timer);
+          isRunning = false;
+          isBreak = !isBreak;
+          timeLeft = isBreak ? 5 * 60 : 25 * 60;
+          startButton.textContent = 'Start';
+          alert(isBreak ? "Break time! 🍃" : "Let's focus! 💻");
+          updateDisplay();
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timer);
+      isRunning = false;
+      startButton.textContent = 'Start';
+    }
+
+    startButton.addEventListener('click', () => {
+      if (isRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    updateDisplay();
+  </script>
+</body>
+</html>
