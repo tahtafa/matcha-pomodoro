@@ -18,24 +18,22 @@ body {
 }
 
 .blob {
-  width: 120px;
-  height: 120px;
-  background: #8cd18a;
-  border-radius: 50% 50% 45% 55% / 55% 50% 50% 45%;
-  margin: auto;
-  position: relative;
   animation: blobMove 4s ease-in-out infinite;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: animation 0.3s ease;
 }
 
-@keyframes blobMove {
+.blob.active {
+  animation: blobMoveActive 1.5s ease-in-out infinite;
+}
+
+@keyframes blobMoveActive {
   0%, 100% {
     border-radius: 50% 50% 45% 55% / 55% 50% 50% 45%;
-    transform: translateY(0px);
+    transform: translateY(0px) scale(1);
   }
   50% {
     border-radius: 55% 45% 50% 50% / 50% 60% 40% 50%;
-    transform: translateY(-8px);
+    transform: translateY(-10px) scale(1.05);
   }
 }
 

@@ -28,13 +28,17 @@ function startTimer() {
 }
 
 function toggleTimer() {
+  const blob = document.querySelector(".blob");
+
   if (!running) {
     startTimer();
     document.querySelector("button").textContent = "Pause";
+    blob.classList.add("active"); // 👈 animate faster
     running = true;
   } else {
     clearInterval(interval);
     document.querySelector("button").textContent = "Start";
+    blob.classList.remove("active"); // 👈 go back to calm float
     running = false;
   }
 }
